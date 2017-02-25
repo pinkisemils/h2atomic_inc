@@ -72,20 +72,19 @@ void reset_uniq() {
 
 int main()
 {
-    pthread_t fixt_threads[NTHREADS];
-    pthread_t unfixg_threads[NTHREADS];
+    pthread_t threads[NTHREADS];
 
     int n_iters = 1000000;
     int current_value;
 
     for (int i=0; i<NTHREADS; i++)
     {
-        pthread_create(&fixt_threads[i], NULL, run_fixt, &n_iters);
+        pthread_create(&threads[i], NULL, run_fixt, &n_iters);
     }
 
     for (int i=0; i<NTHREADS; i++)
     {
-        pthread_join(fixt_threads[i], NULL);
+        pthread_join(threads[i], NULL);
     }
 
     current_value = get_uniq();
@@ -94,12 +93,12 @@ int main()
 
     for (int i=0; i<NTHREADS; i++)
     {
-        pthread_create(&fixt_threads[i], NULL, run_not_fixt, &n_iters);
+        pthread_create(&threads[i], NULL, run_not_fixt, &n_iters);
     }
 
     for (int i=0; i<NTHREADS; i++)
     {
-        pthread_join(fixt_threads[i], NULL);
+        pthread_join(threads[i], NULL);
     }
 
     current_value = get_uniq();
